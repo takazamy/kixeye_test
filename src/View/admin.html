@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= title %> - Kix Eye Test 2</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
+    <link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
+
+    <style>
+
+        body {
+            background: #F1F3FA;
+        }
+
+        /* Profile container */
+        .profile {
+            margin: 20px 0;
+        }
+
+        /* Profile sidebar */
+        .profile-sidebar {
+            padding: 20px 0 10px 0;
+            background: #fff;
+        }
+
+        .profile-userpic img {
+            float: none;
+            margin: 0 auto;
+            width: 50%;
+            height: 50%;
+            -webkit-border-radius: 50% !important;
+            -moz-border-radius: 50% !important;
+            border-radius: 50% !important;
+        }
+
+        .profile-usertitle {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .profile-usertitle-name {
+            color: #5a7391;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .profile-userbuttons {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .profile-userbuttons .btn {
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 15px;
+            margin-right: 5px;
+        }
+
+        .profile-userbuttons .btn:last-child {
+            margin-right: 0px;
+        }
+
+        .profile-usermenu ul li {
+            border-bottom: 1px solid #f0f4f7;
+        }
+
+        .profile-usermenu ul li:last-child {
+            border-bottom: none;
+        }
+
+        .profile-usermenu ul li a {
+            color: #93a3b5;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .profile-usermenu ul li a i {
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .profile-usermenu ul li a:hover {
+            background-color: #fafcfd;
+            color: #5b9bd1;
+        }
+
+        .profile-usermenu ul li.active {
+            border-bottom: none;
+        }
+
+        .profile-usermenu ul li.active a {
+            color: #5b9bd1;
+            background-color: #f6f9fb;
+            border-left: 2px solid #5b9bd1;
+            margin-left: -2px;
+        }
+
+        .custab{
+            border: 1px solid #ccc;
+            padding: 5px;
+            margin: 5% 0;
+            box-shadow: 3px 3px 2px #ccc;
+            transition: 0.5s;
+        }
+        .custab:hover{
+            box-shadow: 3px 3px 0px transparent;
+            transition: 0.5s;
+        }
+        /* Profile Content */
+        .profile-content {
+            padding: 20px;
+            background: #fff;
+            min-height: 160px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-3">
+            <div class="profile-sidebar">
+
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                        Welcome Admin <%= User.UserName %>
+                    </div>
+                </div>
+                <!-- END SIDEBAR USER TITLE -->
+                <!-- SIDEBAR BUTTONS -->
+                <div class="profile-userbuttons">
+                    <button onclick="manageButtonClick()" id="manage-button" type="button" class="btn btn-success btn-sm">Manage</button>
+                    <button onclick="logButtonClick()" id="log-button" type="button" class="btn btn-danger btn-sm">LogUser</button>
+                    <br>
+                    <br>
+                    <button onclick="logoutButtonClick()" id="logout-button" type="button" class="btn btn-danger btn-sm">LogOut</button>
+                </div>
+                <input type="text" name="dataInfo" id="dataInfo" tabindex="1" class="form-control" placeholder="New Nick" value="<%= User.UserID %>" style="display: none;">
+
+                <br>
+
+                <!-- END MENU -->
+            </div>
+        </div>
+        <div class="col-md-9" id="log-form"  style="display: none;">
+            <div class="profile-content">
+                <div class="container">
+                    <div class="row col-md-7 custyle">
+                        <div class="container">
+
+                            From: <input type="date" id="fromDate"/> <input type="time" id="fromTime" ><br><br>
+                            To:   <input type="date" id="toDate"/> <input type="time" id="toTime" ><br><br>
+
+                        </div>
+                        <button onclick="getLogButtonClick( <%= User.UserID %>)" id="getlog-button" type="button" class="btn btn-danger btn-sm">GetLog</button>
+                        <div id="logNumUpdate">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9" id="manage-form"  style="display: none;">
+            <div class="profile-content">
+                <div class="container">
+                    <div class="row col-md-8 custyle">
+                        <table class="table table-striped custab" id="manageTable">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th class="text-center">Nick</th>
+                                <th class="text-center">TimesUpdate</th>
+                                <th class="text-center">Score</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td class="text-center"> user1</td>
+                                    <td class="text-center">5</td>
+                                    <td class="text-center">511</td>
+                                    <td class="text-center"> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td class="text-center">user2</td>
+                                    <td class="text-center">15</td>
+                                    <td class="text-center">11</td>
+                                    <td class="text-center"> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                                </tr>
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="info-content">
+            </div>
+        </div>
+
+    </div>
+</div>
+<br>
+<br>
+</body>
+<script>
+
+    var connection = new WebSocket('ws://'+ window.location.host);
+    connection.onopen = function () {
+        //connection.send('Ping'); // Send the message 'Ping' to the server
+    };
+
+    // Log errors
+    connection.onerror = function (error) {
+        console.log('WebSocket Error ' + error);
+    };
+
+    // Log messages from the server
+    connection.onmessage = function (e) {
+        console.log('Server: ' + e.data,'aaa ' +$("#dataInfo").val());
+        var data = JSON.parse(e.data);
+        if(data.Status == 1){
+            switch (data.Command){
+                case 3:
+                    var table = document.getElementById("manageTable");
+                    var rowCount = table.rows.length;
+                    for (var i = rowCount - 1; i > 0; i--) {
+                        table.deleteRow(i);
+                    }
+                    /*var old_tbody = table.getElementsByTagName('tbody');
+                    old_tbody.remove();
+                    var new_tbody = document.createElement('tbody');
+                   // old_tbody.parentNode.replaceChild(new_tbody, old_tbody);*/
+                    for(var i = 0; i < data.Data.length; i++){
+                        var info = data.Data[i];
+                        var row = table.insertRow(1);
+                        var userId = row.insertCell(0);
+                        var nick = row.insertCell(1);
+                        var timeUpdate = row.insertCell(2);
+                        var score = row.insertCell(3);
+                        var action = row.insertCell(4);
+                        //{"UserID":1,"UserName":"admin","Score":0,"TimesUpdate":0,"UserType":1}
+                        userId.innerHTML = info.UserID;
+                        userId.className = "text-center";
+                        nick.innerHTML =info.UserName;
+                        nick.className = "text-center";
+                        timeUpdate.innerHTML = info.TimesUpdate;
+                        timeUpdate.className = "text-center";
+                        score.innerHTML = info.Score;
+                        score.className = "text-center";
+                        action.innerHTML = '<a onclick="deleteUser('+info.UserID+')" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a>';
+                        action.className = "text-center";
+                    }
+                    break;
+                case 5:
+                    $('#logNumUpdate').text("Number User update Score: " + data.Data.Count);
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
+        else{
+            alert(data.Message);
+        }
+
+
+    };
+
+
+    var manageButtonClick = function (id) {
+        $("#manage-form").delay(100).fadeIn(100);
+        $("#log-form").fadeOut(100);
+        //$('#register-form-link').removeClass('active');
+        //$(this).addClass('active');
+        //e.preventDefault();
+        var msg = {Command: 3, UserID: id};
+        connection.send(JSON.stringify(msg));
+    };
+    var logButtonClick = function () {
+        $("#log-form").delay(100).fadeIn(100);
+        $("#manage-form").fadeOut(100);
+        // $('#login-form-link').removeClass('active');
+        //  $(this).addClass('active');
+        // e.preventDefault();
+
+    };
+
+    var getLogButtonClick = function (id) {
+        console.log($('#toTime').val(), $('#fromTime').val());
+        var msg = {Command: 5, UserID: id, StartTime:$('#fromDate').val() + ' '+$('#fromTime').val(), EndTime:$('#toDate').val()+ ' '+$('#toTime').val()};
+        connection.send(JSON.stringify(msg));
+    };
+
+    var deleteUser = function (id) {
+        console.log('delete User', id);
+        var msg = {Command: 4, UserID: id};
+        connection.send(JSON.stringify(msg));
+    }
+
+    var logoutButtonClick = function () {
+        $.ajax({
+            type: "GET",
+            url: "/logout",
+            data:'',
+            success: function(data, textStatus, xhr) {
+                console.log('aaa',data);
+                if(data.result == 0){
+                    alert(data.message);
+                }else{
+                    window.location = '/';
+                }
+
+            }
+        });
+
+    }
+
+</script>
+
+</html>
