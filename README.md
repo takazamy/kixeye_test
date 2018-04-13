@@ -14,7 +14,6 @@
 1. Use MySQL to store user infos.
 2. Use NodeJS to create http and websocket server
 3. Use HTML to create client
-4. Use RequireJS to min project later
 
 # RESTFul API:
 ### Start   

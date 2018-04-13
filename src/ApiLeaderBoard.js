@@ -17,7 +17,6 @@ const WebSocket = require('ws');
 define(function (require) {
     const config = require('./Config/index');
     const LoggerConfig = require('./Config/LoggerConfig');
-    const db = require('./Database/DBService');
     const dbController = require('./Database/DBController');
     const listUser = [];
     const Logger = require('./Modules/Logger');
