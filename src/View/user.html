@@ -158,7 +158,9 @@
                         <button onclick="updateScoreButtonClick()" id="update-score-button" type="button" class="btn btn-danger btn-sm">Update Score</button>
                         <br>
                         <br>
+
                         <button onclick="logoutButtonClick(<%= User.UserID %>)" id="logout-button" type="button" class="btn btn-danger btn-sm">LogOut</button>
+
                     </div>
                     <input type="text" name="dataInfo" id="dataInfo" tabindex="1" class="form-control" placeholder="New Nick" value="<%= User.UserID %>" style="display: none;">
 
@@ -277,6 +279,7 @@
             JSON.stringify(msg)
             );
     }
+
     var logoutButtonClick = function (id) {
         $.ajax({
             type: "POST",
@@ -285,6 +288,7 @@
             data:{
                 UserID:id
             },
+
             success: function(data, textStatus, xhr) {
                 console.log('aaa',data);
                 if(data.result == 0){

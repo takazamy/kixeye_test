@@ -120,6 +120,7 @@ define(function (require) {
             }
 
 
+
             var user = ApiLeaderBoard.findUserById(userID);
             //console.log('isLoggedIn 2',user);
             if (user)
@@ -128,15 +129,17 @@ define(function (require) {
             var data = {result: 0, code: 'Require Login', message: 'Require Login', desc: null, data: null};
             //res.status(200).json(data);
             res.redirect('/login');
+
         }
         catch(e){
             console.log(e);
             var data = {result: 0, code: 'Require Login', message: 'Require Login', desc: null, data: null};
+
             //res.status(200).json(data);
             res.redirect('/login');
+
         }
 
     }
-//TODO Chua check userLoged in khi doi ten, update score
     return Router;
 });

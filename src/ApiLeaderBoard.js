@@ -129,6 +129,7 @@ define(function (require) {
 
             app.use(bodyParser.urlencoded({ extended: true }));
             app.use(bodyParser.json());
+
             app.set('views','./View/');
             app.engine('html', ejs.renderFile);
             app.set('view engine', 'html');
