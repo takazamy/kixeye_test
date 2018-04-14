@@ -22,25 +22,27 @@ define(function (require) {
 
     function isLoggedIn(req, res, next) {
         try{
-            //var ApiLeaderBoard = require('../ApiLeaderBoard');
+            var ApiLeaderBoard = require('../ApiLeaderBoard');
             var userID = parseInt(req.query.UserID);
             if(isNaN(userID)){
                 userID = req.body.UserID;
             }
 
 
-            //var user = ApiLeaderBoard.getUserByID(userID);
-            //console.log('isLoggedIn 2',user);
-            if (req.session.userData && req.session.userType == 1)
+            var user = ApiLeaderBoard.findUserById(userID);
+            console.log('isLoggedIn 2',user);
+            if (user && user.userType == 1)
                 return next();
 
             var data = {result: 0, code: 'Require Login', message: 'Require Login', desc: null, data: null};
-            res.status(200).json(data);
+            res.redirect('/login');
+            // res.status(200).json(data);
         }
         catch(e){
             console.log(e);
             var data = {result: 0, code: 'Require Login', message: 'Require Login', desc: null, data: null};
-            res.status(200).json(data);
+            //res.status(200).json(data);
+            res.redirect('/login');
         }
 
     }

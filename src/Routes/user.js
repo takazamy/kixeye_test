@@ -57,6 +57,11 @@ define(function (require) {
         try{
             var userName = req.body.UserName;
             var password  = req.body.Password;
+            if(userName.length == 0 || userName > 45 || password.length == 0){
+                var data = {result: 0, code: 'Create Fail', message: 'Not Success', desc: null, data: null};
+                res.status(200).json(data);
+                return;
+            }
             console.log(userName, 'create with' , password);
             var pwMD5 = crypto.createHash('md5').update(password).digest("hex");
             console.log(pwMD5);
