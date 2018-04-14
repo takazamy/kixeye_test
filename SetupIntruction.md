@@ -2,7 +2,8 @@
 
 # MySQL
 ### Install MySQL Server
-### Create database [user][df1]
+### Create database **kixeyeuser**
+Create table **user**
 - UserID INT(11) is PK and AI
 - UserName Varchar(45) Default NULL
 - Password Varchar(50) Default NULL
@@ -13,7 +14,7 @@
 - ModifiedDate DateTime Default NULL
 ## Insert Admin
 Insert user admin set UserType = 1, Password encrypt MD5
-### Create MySQL User have right on [user][df1]
+### Create MySQL User have right on **_kixeyeuser_**
 ### Create Procedures
 ```sh
 DELIMITER $$
